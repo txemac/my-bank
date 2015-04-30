@@ -43,4 +43,14 @@ public class Bank {
             return "Error";
         }
     }
+    
+    /**
+     * Update bank.
+     * Update all customers.
+     */
+    public void updateBank() {
+    	for (Customer customer : customers) {
+			customer.updateAccounts();
+		}
+    }
 }

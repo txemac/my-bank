@@ -15,4 +15,20 @@ public class DateProvider {
     public Date now() {
         return Calendar.getInstance().getTime();
     }
+    
+    /**
+     * Return date 'days' days ago
+     * @return Date
+     */
+    public Date beforeDays(Date date, int days) {
+    	return new Date(date.getTime() - (1000 * 60 * 60 * 24 * days));
+    }
+    
+    /**
+     * Return date 'days' after
+     * @return Date
+     */
+    public Date afterDays(Date date, int days) {
+    	return new Date(date.getTime() + (1000 * 60 * 60 * 24 * days));
+    }
 }

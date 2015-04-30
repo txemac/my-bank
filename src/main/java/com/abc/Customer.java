@@ -65,7 +65,8 @@ public class Customer {
         //Now total up all the transactions
         double total = 0.0;
         for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
+            //s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
+        	s += "  " + t.getTypeText() + " " + toDollars(t.amount) + "\n";
             total += t.amount;
         }
         s += "Total " + toDollars(total);
@@ -74,5 +75,33 @@ public class Customer {
 
     private String toDollars(double d){
         return String.format("$%,.2f", abs(d));
+    }
+    
+    /**
+     * Transfer money account from a to b 
+     * @param a - account from
+     * @param b - account to
+     * @param amount - money
+     */
+    public void transfer(Account a, Account b, double amount) {
+    	if (amount <= 0) {
+	        throw new IllegalArgumentException("amount must be greater than zero");
+    	} else if (a.sumTransactions() < amount) {
+    		throw new IllegalArgumentException("money insufficient in origin account");    
+	    } else {
+	    	a.withdraw(amount);
+	    	b.deposit(amount);
+	        //transactions.add(new Transaction(-amount));
+	    }
+    }
+    
+    /**
+     * Update accounts, interest and rates
+     */
+    public void updateAccounts() {
+    	for (Account account : accounts) {
+			account.updateInterest();
+			account.updateRates();
+		}
     }
 }
